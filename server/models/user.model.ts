@@ -18,10 +18,10 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true
+        required: false
     }
 }, {timestamps: true})
 
-const User = new mongoose.Model('User',userSchema)
+const User = mongoose.model('User', userSchema)
 
 export default User;

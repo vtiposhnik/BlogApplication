@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import userRoutes from './routes/user.route.ts'
+import authRoutes from './routes/auth.route.ts'
 
 // middleware
 const app = express()
@@ -10,6 +12,7 @@ const app = express()
 app.use(bodyParser.json());
 app.use(cors());
 dotenv.config()
+
 // console.log(process.env.PASSWORD_DB);
 
 if (process.env.MONGO_URL) {
@@ -28,10 +31,8 @@ if (process.env.MONGO_URL) {
 const port = 3307
 
 // routes
-
-app.get('/', (req, res) => {
-    res.send('ladidabudubadabi')
-})
+app.use('/api/user', userRoutes)
+app.use('/api/auth', authRoutes)
 
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)
