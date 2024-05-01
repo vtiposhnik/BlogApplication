@@ -1,10 +1,12 @@
-import express, { Router } from 'express'
+import express, { NextFunction, Request, Response, Router } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import userRoutes from './routes/user.route.ts'
 import authRoutes from './routes/auth.route.ts'
+import { errorHandler } from './utils/error.ts';
+import { CustomError } from './interfaces.ts';
 
 // middleware
 const app = express()
@@ -33,6 +35,16 @@ const port = 3307
 // routes
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+
+app.use((err: CustomError, req: Request, res: Response) => {
+    const statusCode = err.statusCode || 500
+    const message = err.message || 'Internal Server Error!'
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message
+    })
+})
 
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)

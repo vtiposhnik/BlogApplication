@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import User from "../models/user.model";
 import bcryptjs from 'bcryptjs'
+import { errorHandler } from "../utils/error";
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, email, password } = req.body
         const user = await User.findOne({ username: username })
@@ -11,10 +12,10 @@ export const register = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'All fields are required' })
         }
         if (username === user?.username) {
-            return res.status(400).json({ message: 'Username is already in use!'})
+            return res.status(400).json({ message: 'Username is already in use!' })
         }
         if (email === user?.email) {
-            return res.status(400).json({ message: 'Email is already in use!'})
+            return res.status(400).json({ message: 'Email is already in use!' })
         }
         const hashedPwd = bcryptjs.hashSync(password, 6)
 
@@ -29,27 +30,32 @@ export const register = async (req: Request, res: Response) => {
         console.log('REQUEST BODY(SIGNUP):', req.body);
     }
     catch (error) {
-        console.error(error);
+        next(error)
     }
 }
 
-export const login = async (req: Request, res: Response) => {
-    const { email, password } = req.body
-    const user = await User.findOne({ email: email })
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email, password } = req.body
+        const user = await User.findOne({ email: email })
 
-    if (!email || !password || email === '' || password === '') {
-        return res.status(400).json({ message: 'All fields are required' })
-    }
-    if (email !== user?.email) {
-        res.status(400).json({ message: "No such user registered!" })
-    }
-    if (user?.password) {
-        const pwdCheck = bcryptjs.compare(password, user.password)
-        if (!pwdCheck) {
-            res.status(400).json({ message: "Password is incorrect", success: false })
+        if (!email || !password || email === '' || password === '') {
+            return res.status(400).json({ message: 'All fields are required' })
         }
-    }
+        if (email !== user?.email) {
+            return next(errorHandler(400, 'No such user registered!'))
+        }
+        if (user?.password) {
+            const pwdCheck = await bcryptjs.compare(password, user.password)
+            if (!pwdCheck) {
+                return next(errorHandler(400, 'Password is incorrect!'))
+            }
+        }
 
-    res.status(200).json({ message: "User logged in successfully!", success: true })
-    console.log('REQUEST BODY(LOGIN):', req.body);
+        res.status(200).json({ message: "User logged in successfully!", success: true })
+        console.log('REQUEST BODY(LOGIN):', req.body);
+    }
+    catch (error) {
+        next(error)
+    }
 }
