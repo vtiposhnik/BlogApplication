@@ -18,7 +18,7 @@ function App() {
         <Route element={<PrivateComponent />}>
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>
-        <Route path='sign-in' element={<SignIn />} />
+        <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
       </Routes>
       <FooterCom />

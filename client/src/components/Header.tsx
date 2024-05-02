@@ -3,7 +3,6 @@ import { Avatar, Button, Dropdown, Navbar, NavbarToggle, TextInput } from "flowb
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
-import { CustomButton } from "../util/utilComps";
 
 export default function Header() {
     const { currentUser } = useSelector((state: RootState) => state.user)
@@ -32,16 +31,15 @@ export default function Header() {
                             }
                         >
                             <Dropdown.Header>
-                                <span className="block text-sm">Vti poshnik</span>
+                                <span className="block text-sm">Chebu Pizza</span>
                                 <span className="block truncate text-sm font-medium"></span>
                             </Dropdown.Header>
-                            <Dropdown.Item>Dashboard</Dropdown.Item>
-                            <Dropdown.Item>Settings</Dropdown.Item>
-                            <Dropdown.Item>Earnings</Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard'>Dashboard</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard?tab=profile'>Profile</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard?tab=posts'>Posts</Link></Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item>Sign out</Dropdown.Item>
+                            <Dropdown.Item>Log out</Dropdown.Item>
                         </Dropdown>
-                        <Navbar.Toggle />
                     </div>
                 ) : (
                     <Link to='/sign-in'>
