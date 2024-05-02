@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   box-sizing: border-box;
   margin: 0;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  font-style: bold;
+  opacity: 0.7;
 }

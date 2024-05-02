@@ -42,7 +42,8 @@ app.use((err: CustomError, req: Request, res: Response) => {
     res.status(statusCode).json({
         success: false,
         statusCode,
-        message
+        message,
+        text: "sldkfjsldkfjlskdjflskdfj"
     })
 })
 

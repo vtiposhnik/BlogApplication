@@ -1,17 +1,51 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form"
+import { useState } from "react";
 
 export default function SignUp() {
-    const loading = false;
-    const errorMessage = ''
+    const [errorMsg, setErrorMsg] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-        throw new Error("Function not implemented.");
-    }
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const password = watch('password', '')
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-        throw new Error("Function not implemented.");
-    }
+
+
+    const onSubmit = async (formData) => {
+        console.log(formData);
+
+        try {
+            setLoading(true);
+            setErrorMsg(null);
+            const res = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            const data = await res.json();
+            if (data.success === false) {
+                console.log("unsuccessfull", errorMsg)
+
+                return setErrorMsg(data.message);
+            }
+            setLoading(false);
+            if (res.ok) {
+                console.log("successfull", data.message)
+                navigate('/signin');
+            }
+        } catch (error) {
+            console.log("in Catch", errorMsg)
+            setErrorMsg(error.message);
+            setLoading(false);
+        }
+    };
 
     return (
         <div className='min-h-screen mt-20'>
@@ -31,34 +65,79 @@ export default function SignUp() {
                 {/* right */}
 
                 <div className='flex-1'>
-                    <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                    <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <Label value='Your username' />
                             <TextInput
+                                required
                                 type='text'
                                 placeholder='Username'
                                 id='username'
-                                onChange={handleChange}
+                                {...register('username', {
+                                    maxLength: 40
+                                })}
                             />
                         </div>
                         <div>
                             <Label value='Your email' />
                             <TextInput
+                                required
                                 type='email'
                                 placeholder='name@company.com'
                                 id='email'
-                                onChange={handleChange}
+                                {...register(('email'), {
+                                    maxLength: 60,
+                                    pattern: {
+                                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                        message: "Invalid Email!"
+                                    }
+                                })}
                             />
                         </div>
+                        {errors.email && (<span className="error"> {errors.email.message} </span>)}
+
                         <div>
                             <Label value='Your password' />
                             <TextInput
+                                required
                                 type='password'
                                 placeholder='Password'
                                 id='password'
-                                onChange={handleChange}
+                                {...register('password', {
+                                    maxLength: 60,
+                                    validate: {
+                                        matchPattern: (value) =>
+                                            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)/.test(
+                                                value
+                                            ),
+                                        minLength: (value) => value.length > 6
+                                    }
+                                })}
                             />
                         </div>
+                        {errors.password?.type === 'matchPattern' && <span className="error"> Password should contain at least one uppercase letter, lowercase
+                            letter, digit, and special symbol.</span>}
+                        {errors.password?.type === 'minLength' && <span className="error"> Password should be at least 6 characters!</span>}
+
+                        <div>
+                            <Label value='Confirm password' />
+                            <TextInput
+                                required
+                                type='password'
+                                placeholder='Password'
+                                id='password'
+                                {...register(('passwordConfirm'), {
+                                    maxLength: 60,
+                                    minLength: {
+                                        value: 6,
+                                        message: "Password should be at least 6 characters!"
+                                    },
+                                    validate: (value) => value === password || "Passwords do not match!"
+                                })}
+                            />
+                        </div>
+                        {errors.passwordConfirm && <span className="error"> {errors.passwordConfirm.message} </span>}
+
                         <Button
                             gradientDuoTone='purpleToPink'
                             type='submit'
@@ -80,9 +159,9 @@ export default function SignUp() {
                             Sign In
                         </Link>
                     </div>
-                    {errorMessage && (
+                    {errorMsg && (
                         <Alert className='mt-5' color='failure'>
-                            {errorMessage}
+                            {errorMsg}
                         </Alert>
                     )}
                 </div>
