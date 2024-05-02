@@ -1,7 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 
-export default function SignIn() {
+export default function SignUp() {
     const loading = false;
     const errorMessage = ''
 
@@ -25,13 +25,22 @@ export default function SignIn() {
                         Pizza
                     </Link>
                     <p className='text-sm mt-5'>
-                        You can sign in with your email and password.
+                        You can sign up with your email and password.
                     </p>
                 </div>
                 {/* right */}
 
                 <div className='flex-1'>
                     <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                        <div>
+                            <Label value='Your username' />
+                            <TextInput
+                                type='text'
+                                placeholder='Username'
+                                id='username'
+                                onChange={handleChange}
+                            />
+                        </div>
                         <div>
                             <Label value='Your email' />
                             <TextInput
@@ -45,7 +54,7 @@ export default function SignIn() {
                             <Label value='Your password' />
                             <TextInput
                                 type='password'
-                                placeholder='**********'
+                                placeholder='Password'
                                 id='password'
                                 onChange={handleChange}
                             />
@@ -61,14 +70,14 @@ export default function SignIn() {
                                     <span className='pl-3'>Loading...</span>
                                 </>
                             ) : (
-                                'Sign In'
+                                'Sign Up'
                             )}
                         </Button>
                     </form>
                     <div className='flex gap-2 text-sm mt-5'>
-                        <span>Dont Have an account?</span>
-                        <Link to='/sign-up' className='text-blue-500'>
-                            Sign Up
+                        <span>Have an account?</span>
+                        <Link to='/sign-in' className='text-blue-500'>
+                            Sign In
                         </Link>
                     </div>
                     {errorMessage && (

@@ -1,18 +1,20 @@
 
-import { Button, Navbar, NavbarLink, NavbarToggle } from "flowbite-react";
+import { Button, Navbar, NavbarToggle } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
-        <Navbar fluid rounded className="">
+        <Navbar fluid rounded>
             <Link to='/'>
-                <span className="self-center bg-gradient-to-r from-blue-500 via-emerald-200 to-zinc-100">Chebu</span>
+                <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg'>Chebu</span>
                 Pizza
             </Link>
             <div className="flex md:order-2">
                 <NavbarToggle />
             </div>
-            <Navbar.Collapse className="lg:flex lg:items-center">
+            <Navbar.Collapse >
+                <div className="md:flex md:items-center gap-3">
+
                     <Navbar.Link href="#" as={'div'}>
                         <Link to='/'>
                             Home
@@ -28,11 +30,12 @@ export default function Header() {
                             Dashboard
                         </Link>
                     </Navbar.Link>
-                    <Link to='/auth'>
+                    <Link to='/sign-in'>
                         <Button gradientDuoTone='purpleToBlue' outline>
                             Sign In
                         </Button>
                     </Link>
+                </div>
             </Navbar.Collapse>
         </Navbar>
     );
