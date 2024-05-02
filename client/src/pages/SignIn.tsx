@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux'
 import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice";
+import { RootState } from "../redux/store";
 
 export default function SignIn() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {loading, error: errorMsg} = useSelector(state => state.user)
+    const {loading, error: errorMsg} = useSelector((state: RootState) => state.user)
 
     const {
         register,
