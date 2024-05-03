@@ -1,7 +1,7 @@
 
 import { Avatar, Button, Dropdown, Navbar, NavbarToggle, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { RootState } from "../redux/store";
 
 export default function Header() {
