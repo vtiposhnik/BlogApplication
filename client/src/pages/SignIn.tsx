@@ -1,14 +1,16 @@
-import { Button, Label, Spinner, TextInput } from "flowbite-react";
+import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux'
 import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice";
+import { ErrorBoundary } from 'react-error-boundary'
 import { RootState } from "../redux/store";
 
 export default function SignIn() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {loading, error: errorMsg} = useSelector((state: RootState) => state.user)
+    const { loading, error: errorMsg } = useSelector((state: RootState) => state.user)
+    console.log(errorMsg)
 
     const {
         register,
@@ -115,7 +117,7 @@ export default function SignIn() {
                             )}
                         </Button>
                     </form>
-                    
+
                     <div className='flex gap-2 text-sm mt-5'>
                         <span>Dont Have an account?</span>
                         <Link to='/sign-up' className='text-blue-500'>
@@ -123,11 +125,14 @@ export default function SignIn() {
                         </Link>
                     </div>
 
-                    {errorMsg && (
-                        <div className='mt-5 error'>
-                            {errorMsg}
-                        </div>
-                    )}
+                    <ErrorBoundary fallback={<p>⚠️ The 'errorMsg' is null!</p>}>
+                        {errorMsg !== null && (
+                            <Alert className='mt-5'>
+                                {errorMsg}
+                            </Alert>
+                        )}
+                    </ErrorBoundary>
+
                 </div>
             </div>
         </div>

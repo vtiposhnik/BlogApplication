@@ -1,8 +1,27 @@
 import { Avatar, Button, TextInput } from "flowbite-react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { logOutSuccess } from "../redux/user/userSlice"
 
 export default function DashProfile() {
     const { currentUser } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
+    const handleLogout = async () => {
+        try {
+            const res = await fetch('/api/user/signout', {
+                method: 'POST'
+            })
+            const data = await res.json()
+
+            if (!res.ok) {
+                data.message
+            } else {
+                dispatch(logOutSuccess())
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <section className="flex flex-col gap-4 items-center p-6 text-center">
@@ -20,7 +39,7 @@ export default function DashProfile() {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta, impedit nulla. Fugiat voluptatum quos soluta omnis nulla, maiores ullam
                 non earum deleniti harum eligendi aliquam temporibus nisi voluptate eos doloremque.
             </div>
-            <Button>
+            <Button onClick={handleLogout}>
                 Sign Out
             </Button>
         </section>

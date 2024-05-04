@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp"
 import Header from "./components/Header"
 import FooterCom from './components/Footer'
 import PrivateComponent from "./components/PrivateComponent"
+import Posts from "./pages/Posts"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path='' element={<Home />} />
         <Route path='/about' element={<About />} />
+        <Route path='/community' element={<Posts />} />
         <Route element={<PrivateComponent />}>
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>

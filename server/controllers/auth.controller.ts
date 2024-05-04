@@ -58,7 +58,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         if (secret_key) {
             token = jwt.sign({
-                id: user?._id
+                id: user?._id,
+                isAdmin: user.isAdmin
             }, secret_key)
         }
 
