@@ -4,6 +4,7 @@ import bcryptjs from 'bcryptjs'
 import jwt, { Secret } from 'jsonwebtoken'
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
+    
     try {
         const { username, email, password } = req.body
         const user = await User.findOne({ username: username })

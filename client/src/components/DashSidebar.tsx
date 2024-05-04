@@ -21,21 +21,21 @@ export default function DashSidebar() {
                 <Sidebar.ItemGroup className='flex flex-col gap-1'>
                     <Link to='/dashboard'>
                         <Sidebar.Item as={'div'} active={tab === ''} icon={HiChartPie}>
-                            Dashboard
+                            Управление
                         </Sidebar.Item>
                     </Link>
                     <Link to='/dashboard?tab=profile'>
                         <Sidebar.Item as={'div'} active={tab === 'profile'} icon={HiUser} label='user' labelColor='darkk'>
-                            Profile
+                            Профиль
                         </Sidebar.Item>
                     </Link>
                     <Link to='/dashboard?tab=posts'>
                         <Sidebar.Item as={'div'} active={tab === 'posts'} icon={HiInbox}>
-                            Posts
+                            Посты
                         </Sidebar.Item>
                     </Link>
                     <Sidebar.Item as={'div'} active={tab === 'logout'} icon={HiArrowSmRight}>
-                        Log Out
+                        Выйти
                     </Sidebar.Item>
                 </Sidebar.ItemGroup>
             </Sidebar.Items>

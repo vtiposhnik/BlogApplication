@@ -9,6 +9,10 @@ import 'react-quill/dist/quill.snow.css';
 export default function Posts() {
     const [isOpen, setIsOpen] = useState(false)
 
+    const handleSubmit = async () => {
+
+    }
+
     const handleModal = () => {
         setIsOpen(true)
     }
@@ -45,7 +49,7 @@ export default function Posts() {
             >
                 <Modal.Header>Create a Post</Modal.Header>
                 <Modal.Body>
-                    <form className="space-y-6 p-6">
+                    <form className="space-y-6 p-6" onSubmit={handleSubmit}>
                         <TextInput
                             id='title'
                             type='text'

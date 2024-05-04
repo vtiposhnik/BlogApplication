@@ -54,7 +54,7 @@ export default function SignIn() {
                         Pizza
                     </Link>
                     <p className='text-sm mt-5'>
-                        You can sign in with your email and password.
+                        Вы можете войти с помощью своей почты и пароля.
                     </p>
                 </div>
                 {/* right */}
@@ -62,7 +62,7 @@ export default function SignIn() {
                 <div className='flex-1'>
                     <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
                         <div>
-                            <Label value='Your email' />
+                            <Label value='Ваша электронная почта' />
                             <TextInput
                                 required
                                 type='email'
@@ -80,7 +80,7 @@ export default function SignIn() {
                         {errors.email && (<span className="error"> {errors.email.message} </span>)}
 
                         <div>
-                            <Label value='Your password' />
+                            <Label value='Ваш пароль' />
                             <TextInput
                                 required
                                 type='password'
@@ -98,9 +98,9 @@ export default function SignIn() {
                                 })}
                             />
                         </div>
-                        {errors.password?.type === 'matchPattern' && <span className="error"> Password should contain at least one uppercase letter, lowercase
-                            letter, digit, and special symbol.</span>}
-                        {errors.password?.type === 'minLength' && <span className="error"> Password should be at least 6 characters!</span>}
+                        {errors.password?.type === 'matchPattern' && <span className="error">
+                            Пароль должен содержать как минимум одну заглавную букву, цифру и специальный символ!</span>}
+                        {errors.password?.type === 'minLength' && <span className="error"> Пароль должен содержать как минимум 6 символ!</span>}
 
                         <Button
                             gradientDuoTone='purpleToPink'
@@ -110,18 +110,18 @@ export default function SignIn() {
                             {loading ? (
                                 <>
                                     <Spinner size='sm' />
-                                    <span className='pl-3'>Loading...</span>
+                                    <span className='pl-3'>Загрузка...</span>
                                 </>
                             ) : (
-                                'Sign In'
+                                'Войти'
                             )}
                         </Button>
                     </form>
 
                     <div className='flex gap-2 text-sm mt-5'>
-                        <span>Dont Have an account?</span>
+                        <span>Не авторизованы?</span>
                         <Link to='/sign-up' className='text-blue-500'>
-                            Sign Up
+                            Регистрация
                         </Link>
                     </div>
 

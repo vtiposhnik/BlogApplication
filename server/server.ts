@@ -2,9 +2,11 @@ import express, { NextFunction, Request, Response, Router } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose';
 import userRoutes from './routes/user.route.ts'
 import authRoutes from './routes/auth.route.ts'
+import postRoutes from './routes/post.route.ts'
 import { errorHandler } from './utils/error.ts';
 import { CustomError } from './interfaces.ts';
 
@@ -12,6 +14,7 @@ import { CustomError } from './interfaces.ts';
 const app = express()
 
 app.use(bodyParser.json());
+app.use(cookieParser())
 app.use(cors());
 dotenv.config()
 
@@ -35,6 +38,7 @@ const port = 3307
 // routes
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/post', postRoutes)
 
 app.use((err: CustomError, req: Request, res: Response) => {
     const statusCode = err.statusCode || 500

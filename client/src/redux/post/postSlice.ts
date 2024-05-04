@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface UserState {
     author: string | null,
-    heading: string | null,
+    title: string | null,
     body: string | null,
     error: string | null,
     loading: boolean
@@ -10,7 +10,7 @@ interface UserState {
 
 const initialState: UserState = {
     author: null,
-    heading: null,
+    title: null,
     body: null,
     error: null,
     loading: false
@@ -22,7 +22,7 @@ const userSlice = createSlice({
     reducers: {
         postCreate: (state, action) => {
             state.author = action.payload.user
-            state.heading = action.payload.heading
+            state.title = action.payload.heading
         }
     }
 })

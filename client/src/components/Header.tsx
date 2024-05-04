@@ -1,7 +1,7 @@
 
 import { Avatar, Button, Dropdown, Navbar, NavbarToggle, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../redux/store";
 
 export default function Header() {
@@ -15,9 +15,9 @@ export default function Header() {
                 className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
             >
                 <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-                    Sahand's
+                    Chebu
                 </span>
-                Blog
+                Pizza
             </Link>
 
             <div className='flex gap-2 md:order-2'>
@@ -34,11 +34,11 @@ export default function Header() {
                                 <span className="block text-sm">Chebu Pizza</span>
                                 <span className="block truncate text-sm font-medium"></span>
                             </Dropdown.Header>
-                            <Dropdown.Item><Link to='/dashboard'>Dashboard</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to='/dashboard?tab=profile'>Profile</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to='/dashboard?tab=posts'>Posts</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard'>Управление</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard?tab=profile'>Профиль</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard?tab=posts'>Посты</Link></Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item>Log out</Dropdown.Item>
+                            <Dropdown.Item>Выйти</Dropdown.Item>
                         </Dropdown>
                     </div>
                 ) : (
@@ -53,13 +53,13 @@ export default function Header() {
 
             <Navbar.Collapse>
                 <Navbar.Link active={path === '/'} as={'div'}>
-                    <Link to='/'>Home</Link>
+                    <Link to='/'>Главная</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/about'} as={'div'}>
-                    <Link to='/about'>About</Link>
+                    <Link to='/about'>О нас</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/community'} as={'div'}>
-                    <Link to='/community'>Community</Link>
+                    <Link to='/community'>Сообщество</Link>
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
