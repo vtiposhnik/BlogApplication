@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import Post from "../models/post.model";
 
+export const getPosts = async (req: Request, res: Response, next: NextFunction) => {
+    const {user} = req.body
+    
+    const posts = 
+}
+
 export const createPost = async (req: Request, res: Response, next: NextFunction) => {
     const { user } = req.body
     console.log(user, 'request body', req.body, ' ', req.body.title )

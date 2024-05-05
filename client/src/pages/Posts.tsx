@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { HiChat, HiEye } from 'react-icons/hi'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Button, FileInput, Alert, Modal, Select, Spinner, TextInput } from 'flowbite-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -27,15 +27,51 @@ export default function Posts() {
         image: null,
         category: null
     });
-    // const [publishError, setPublishError] = useState(null);
+    const [formValidation, setFormValidation] = useState({
+        titleVal: '',
+        contentVal: ''
+    })
+    const [publishError, setPublishError] = useState('');
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(formData, file)
-    // }, [formData, file])
+    const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleModalClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        if (formData.title === '' || formData.title === null) {
+            setFormValidation(prev => ({
+                ...prev,
+                titleVal: 'Please fill out this field!',
+                contentVal: ''
+            }))
+        } else
+            if (formData.content === '' || formData.content === null) {
+                setFormValidation(prev => ({
+                    ...prev,
+                    titleVal: '',
+                    contentVal: 'Please fill out this field!'
+                }))
+            } else {
+                handleSubmit()
+                setIsOpen(false)
+            }
+
+    }
+
+    useEffect(() => {
+        const getPosts = async () => {
+            const res = await fetch('/api/post/get', {
+                method: 'GET'
+            })
+            if (!res.ok) {
+                console.error("Response is not ok")
+            }
+            const data = await res.json()
+            console.log(data)
+        }
+        getPosts()
+    }, [formData, file])
+
+    const handleSubmit = async () => {
         try {
             const res = await fetch('/api/post/create', {
                 method: 'POST',
@@ -47,7 +83,12 @@ export default function Posts() {
 
             const data = await res.json()
             console.log(data)
+            
+            const slug = data.post.slug
+            navigate(`posts/${slug}`)
+
         } catch (error) {
+            setPublishError("Something went wrong!")
             console.error(error)
         }
     }
@@ -114,7 +155,7 @@ export default function Posts() {
                 </div>
             </aside>
 
-            <article className="w-[60%] border rounded-lg mx-auto max-h-[15rem] px-5 py-3 shadow-md">
+            {<article className="w-[60%] border rounded-lg mx-auto max-h-[15rem] px-5 py-3 shadow-md">
                 <h1 className=""><Link to=''>Random Artice Title</Link></h1>
                 <div className="mt-3">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus laboriosam amet pariatur, eligendi, recusandae veniam quos magni mollitia eaque odio inventore sunt officiis libero, doloremque adipisci dolorum exercitationem aut.</p>
@@ -125,7 +166,8 @@ export default function Posts() {
                     <span className='border rounded-md p-1 opacity-60 flex gap-4'><HiChat size={25} color='gray' /> 45</span>
                     <span className='border rounded-md p-1 opacity-60 flex gap-4'><HiEye size={25} color='gray' /> 245 views</span>
                 </div>
-            </article>
+            </article>}
+
 
             <Modal
                 show={isOpen}
@@ -141,6 +183,7 @@ export default function Posts() {
                             placeholder='Add title...'
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             required />
+                        {formValidation.titleVal == '' || null ? <></> : <Alert>{formValidation.titleVal}</Alert>}
                         <Select
                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         >
@@ -167,19 +210,19 @@ export default function Posts() {
                         {formData.image && (
                             <img
                                 src={formData.image}
-                                alt='upload'
+                                alt='your upload'
                                 className='w-full h-72 object-cover'
                             />
                         )}
                         <ReactQuill theme='snow' placeholder='Body of your post...' className='h-52'
                             onChange={(value) => setFormData({ ...formData, content: value })}
                         />
+                        {formValidation.contentVal == '' || null ? <></> : <Alert>{formValidation.contentVal}</Alert>}
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                        setIsOpen(false)
-                        handleSubmit(e)
+                        handleModalClick(e)
                     }} >Publish</Button>
                     <Button color="gray" onClick={() => setIsOpen(false)}>
                         Cancel
