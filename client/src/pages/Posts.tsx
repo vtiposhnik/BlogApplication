@@ -1,17 +1,100 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { HiChat, HiEye } from 'react-icons/hi'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { Button, FileInput, Label, Modal, Select, TextInput } from 'flowbite-react'
+import { Button, FileInput, Alert, Modal, Select, Spinner, TextInput } from 'flowbite-react'
 import { useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { storage } from '../../firebase'
+
+interface FormData {
+    title: string | null,
+    content: string | null,
+    image: string | null,
+    category: string | null
+}
 
 export default function Posts() {
     const [isOpen, setIsOpen] = useState(false)
+    const [file, setFile] = useState<File | null>(null)
+    const [imageUploadProgress, setImageUploadProgress] = useState('');
+    const [imageUploadError, setImageUploadError] = useState('');
+    const [loading, setLoading] = useState(false)
+    const [formData, setFormData] = useState<FormData>({
+        title: null,
+        content: null,
+        image: null,
+        category: null
+    });
+    // const [publishError, setPublishError] = useState(null);
 
-    const handleSubmit = async () => {
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     console.log(formData, file)
+    // }, [formData, file])
 
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        try {
+            const res = await fetch('/api/post/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+
+            const data = await res.json()
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
     }
+    const handleUploadImg = async () => {
+
+        try {
+            setLoading(true)
+            if (!file) {
+                console.log('salkfdj;aslkdfj;')
+                setImageUploadError('Please select an image');
+                setLoading(false)
+                return;
+            }
+            setImageUploadError('');
+            const fileName = new Date().getTime() + '-' + file.name;
+
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    setLoading(true)
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setImageUploadProgress(progress.toFixed(0));
+                },
+                (error) => {
+                    console.log(error)
+                    setImageUploadError('Image upload failed');
+                    setImageUploadProgress('');
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        setImageUploadProgress('');
+                        setLoading(false)
+                        setImageUploadError('');
+                        setFormData({ ...formData, image: downloadURL });
+                    });
+                }
+            );
+        } catch (error) {
+            setImageUploadError('Image upload failed');
+            setImageUploadProgress('');
+            console.log(error);
+        }
+    };
 
     const handleModal = () => {
         setIsOpen(true)
@@ -30,6 +113,7 @@ export default function Posts() {
 
                 </div>
             </aside>
+
             <article className="w-[60%] border rounded-lg mx-auto max-h-[15rem] px-5 py-3 shadow-md">
                 <h1 className=""><Link to=''>Random Artice Title</Link></h1>
                 <div className="mt-3">
@@ -42,6 +126,7 @@ export default function Posts() {
                     <span className='border rounded-md p-1 opacity-60 flex gap-4'><HiEye size={25} color='gray' /> 245 views</span>
                 </div>
             </article>
+
             <Modal
                 show={isOpen}
                 position='center'
@@ -49,13 +134,16 @@ export default function Posts() {
             >
                 <Modal.Header>Create a Post</Modal.Header>
                 <Modal.Body>
-                    <form className="space-y-6 p-6" onSubmit={handleSubmit}>
+                    <form className="space-y-6 p-6">
                         <TextInput
                             id='title'
                             type='text'
                             placeholder='Add title...'
+                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             required />
-                        <Select>
+                        <Select
+                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        >
                             <option value="uncategorized">Select a category</option>
                             <option value="it">IT</option>
                             <option value="math">Mathematics</option>
@@ -63,14 +151,36 @@ export default function Posts() {
                             <option value="language">Language</option>
                         </Select>
                         <div className='flex items-center justify-between'>
-                            <FileInput id="file-upload" accept='image/*' />
-                            <Button gradientDuoTone='purpleToBlue' outline >Upload</Button>
+                            <FileInput id="file-upload" accept='image/*' onChange={(e) => { if (e.target.files) { setFile(e.target.files[0]) } }} />
+                            <Button gradientDuoTone='purpleToBlue' outline onClick={handleUploadImg} >
+                                {loading ? (
+                                    <>
+                                        <Spinner size='sm' />
+                                        <span className='pl-3'>{imageUploadProgress}%</span>
+                                    </>
+                                ) : (
+                                    'Upload Image'
+                                )}
+                            </Button>
                         </div>
-                        <ReactQuill theme='snow' placeholder='Body of your post...' className='h-52 ' />
+                        {imageUploadError !== '' ? <Alert>{imageUploadError}</Alert> : <></>}
+                        {formData.image && (
+                            <img
+                                src={formData.image}
+                                alt='upload'
+                                className='w-full h-72 object-cover'
+                            />
+                        )}
+                        <ReactQuill theme='snow' placeholder='Body of your post...' className='h-52'
+                            onChange={(value) => setFormData({ ...formData, content: value })}
+                        />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => setIsOpen(false)}>Publish</Button>
+                    <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        setIsOpen(false)
+                        handleSubmit(e)
+                    }} >Publish</Button>
                     <Button color="gray" onClick={() => setIsOpen(false)}>
                         Cancel
                     </Button>

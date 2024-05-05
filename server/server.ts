@@ -40,16 +40,16 @@ app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 
-app.use((err: CustomError, req: Request, res: Response) => {
-    const statusCode = err.statusCode || 500
-    const message = err.message || 'Internal Server Error!'
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error!';
     res.status(statusCode).json({
-        success: false,
-        statusCode,
-        message,
-        text: "sldkfjsldkfjlskdjflskdfj"
-    })
-})
+      success: false,
+      statusCode,
+      message,
+      text: 'Additional error information here',
+    });
+  });
 
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)

@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# firebase
+blog-chebu-firebase-adminsdk-gih1v-bd4d97696f.json

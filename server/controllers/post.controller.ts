@@ -3,8 +3,10 @@ import Post from "../models/post.model";
 
 export const createPost = async (req: Request, res: Response, next: NextFunction) => {
     const { user } = req.body
+    console.log(user, 'request body', req.body, ' ', req.body.title )
+    const title = req.body.title || 'Untitled'
 
-    const slug = req.body.title
+    const slug = title
         .split(' ')
         .join('-')
         .toLowerCase()
