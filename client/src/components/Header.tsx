@@ -36,7 +36,6 @@ export default function Header() {
                             </Dropdown.Header>
                             <Dropdown.Item><Link to='/dashboard'>Управление</Link></Dropdown.Item>
                             <Dropdown.Item><Link to='/dashboard?tab=profile'>Профиль</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to='/dashboard?tab=posts'>Посты</Link></Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item>Выйти</Dropdown.Item>
                         </Dropdown>
@@ -58,8 +57,8 @@ export default function Header() {
                 <Navbar.Link active={path === '/about'} as={'div'}>
                     <Link to='/about'>О нас</Link>
                 </Navbar.Link>
-                <Navbar.Link active={path === '/community'} as={'div'}>
-                    <Link to='/community'>Сообщество</Link>
+                <Navbar.Link active={path === '/posts'} as={'div'}>
+                    <Link to='/posts'>Сообщество</Link>
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>

@@ -33,7 +33,6 @@ if (process.env.MONGO_URL) {
 }
 
 // vars
-const port = 3307
 
 // routes
 app.use('/api/user', userRoutes)
@@ -44,13 +43,14 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || 'Internal Server Error!';
     res.status(statusCode).json({
-      success: false,
-      statusCode,
-      message,
-      text: 'Additional error information here',
+        success: false,
+        statusCode,
+        message,
+        text: 'Additional error information here',
     });
-  });
+});
 
+const port = 3307
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)
 })
