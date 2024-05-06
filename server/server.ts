@@ -41,12 +41,15 @@ app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 
+const parentDir = path.resolve(__dirname, '..')
+
 app.use(express.static(path.join(__dirname, '/client/dist')));
-console.log(dirname, "other one", __dirname)
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  res.sendFile(path.join(parentDir, 'client', 'dist', 'index.html'));
 });
+
+console.log(parentDir, "Parent Directory")
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
@@ -59,7 +62,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-const port = 3307
+const port = 10000
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)
 })
