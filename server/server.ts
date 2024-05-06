@@ -4,15 +4,12 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose';
-import userRoutes from './routes/user.route.ts'
-import authRoutes from './routes/auth.route.ts'
-import postRoutes from './routes/post.route.ts'
-import commentRoutes from './routes/comment.route.ts'
-import { errorHandler } from './utils/error.ts';
-import { CustomError } from './interfaces.ts';
+import userRoutes from './routes/user.route'
+import authRoutes from './routes/auth.route'
+import postRoutes from './routes/post.route'
+import commentRoutes from './routes/comment.route'
 
 import path from 'path';
-const __dirname = path.resolve();
 
 // middleware
 const app = express()

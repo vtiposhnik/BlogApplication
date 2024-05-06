@@ -1,5 +1,5 @@
 
-import { Avatar, Button, Dropdown, Navbar, NavbarToggle, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../redux/store";

@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
-import { set } from 'mongoose';
 
-export default function Comment({ comment }) {
-    const [user, setUser] = useState({});
+export default function Comment({ comment }: {comment: any}) {
+    const [user, setUser] = useState<any>({});
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(comment.content);
-    const { currentUser } = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state: any) => state.user);
 
     useEffect(() => {
         const getUser = async () => {
@@ -20,7 +20,7 @@ export default function Comment({ comment }) {
                     setUser(data);
                 }
             } catch (error) {
-                console.log(error.message);
+                console.log(error);
             }
         };
         getUser();
@@ -41,7 +41,7 @@ export default function Comment({ comment }) {
                 setIsEditing(false);
             }
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
     return (
@@ -49,7 +49,7 @@ export default function Comment({ comment }) {
             <div className='flex-shrink-0 mr-3'>
                 <img
                     className='w-10 h-10 rounded-full bg-gray-200'
-                    src={user.profilePicture}
+                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                     alt={user.username}
                 />
             </div>

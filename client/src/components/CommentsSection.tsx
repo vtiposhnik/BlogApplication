@@ -1,20 +1,19 @@
-import { Alert, Button, Modal, TextInput, Textarea } from 'flowbite-react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Alert, Button, Modal, Textarea } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 export default function CommentSection({ postId }: { postId: string }) {
-    const { currentUser } = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state: any) => state.user);
     const [comment, setComment] = useState('');
     const [commentError, setCommentError] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState<any>([]);
     const [showModal, setShowModal] = useState(false);
-    const [commentToDelete, setCommentToDelete] = useState(null);
-    const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (comment.length > 200) {
             return;
@@ -37,7 +36,7 @@ export default function CommentSection({ postId }: { postId: string }) {
                 setCommentError(null);
                 setComments([data, ...comments]);
             }
-        } catch (error) {
+        } catch (error: any) {
             setCommentError(error.message);
         }
     };
@@ -51,7 +50,7 @@ export default function CommentSection({ postId }: { postId: string }) {
                     setComments(data);
                 }
             } catch (error) {
-                console.log(error.message);
+                console.log(error);
             }
         };
         getComments();
@@ -89,8 +88,8 @@ export default function CommentSection({ postId }: { postId: string }) {
                 >
                     <Textarea
                         placeholder='Add a comment...'
-                        rows='3'
-                        maxLength='200'
+                        rows={3}
+                        maxLength={200}
                         onChange={(e) => setComment(e.target.value)}
                         value={comment}
                     />
@@ -119,7 +118,7 @@ export default function CommentSection({ postId }: { postId: string }) {
                             <p>{comments.length}</p>
                         </div>
                     </div>
-                    {comments.map((comment) => (
+                    {comments.map((comment: any) => (
                         <Comment
                             key={comment._id}
                             comment={comment}
@@ -143,7 +142,6 @@ export default function CommentSection({ postId }: { postId: string }) {
                         <div className='flex justify-center gap-4'>
                             <Button
                                 color='failure'
-                                onClick={() => handleDelete(commentToDelete)}
                             >
                                 Yes, I'm sure
                             </Button>
