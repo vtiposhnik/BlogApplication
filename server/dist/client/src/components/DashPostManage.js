@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,19 +7,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const flowbite_react_1 = require("flowbite-react");
-const react_1 = require("react");
-const react_redux_1 = require("react-redux");
-const react_router_dom_1 = require("react-router-dom");
-const hi_1 = require("react-icons/hi");
-function DashPosts() {
-    const { currentUser } = (0, react_redux_1.useSelector)((state) => state.user);
-    const [userPosts, setUserPosts] = (0, react_1.useState)([]);
-    const [showMore, setShowMore] = (0, react_1.useState)(true);
-    const [showModal, setShowModal] = (0, react_1.useState)(false);
-    const [postIdToDelete, setPostIdToDelete] = (0, react_1.useState)('');
-    (0, react_1.useEffect)(() => {
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Modal, Table, Button } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
+export default function DashPosts() {
+    const { currentUser } = useSelector((state) => state.user);
+    const [userPosts, setUserPosts] = useState([]);
+    const [showMore, setShowMore] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [postIdToDelete, setPostIdToDelete] = useState('');
+    useEffect(() => {
         const fetchPosts = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 if (!currentUser) {
@@ -36,7 +36,7 @@ function DashPosts() {
                 }
             }
             catch (error) {
-                console.log(error.message);
+                console.log(error);
             }
         });
         if (currentUser.isAdmin) {
@@ -56,7 +56,7 @@ function DashPosts() {
             }
         }
         catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     });
     const handleDeletePost = () => __awaiter(this, void 0, void 0, function* () {
@@ -74,46 +74,11 @@ function DashPosts() {
             }
         }
         catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     });
-    return (React.createElement("div", { className: 'table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500' },
-        currentUser.isAdmin && userPosts.length > 0 ? (React.createElement(React.Fragment, null,
-            React.createElement(flowbite_react_1.Table, { hoverable: true, className: 'shadow-md' },
-                React.createElement(flowbite_react_1.Table.Head, null,
-                    React.createElement(flowbite_react_1.Table.HeadCell, null, "Date updated"),
-                    React.createElement(flowbite_react_1.Table.HeadCell, null, "Post image"),
-                    React.createElement(flowbite_react_1.Table.HeadCell, null, "Post title"),
-                    React.createElement(flowbite_react_1.Table.HeadCell, null, "Category"),
-                    React.createElement(flowbite_react_1.Table.HeadCell, null, "Delete"),
-                    React.createElement(flowbite_react_1.Table.HeadCell, null,
-                        React.createElement("span", null, "Edit"))),
-                userPosts.map((post) => (React.createElement(flowbite_react_1.Table.Body, { className: 'divide-y' },
-                    React.createElement(flowbite_react_1.Table.Row, { className: 'bg-white dark:border-gray-700 dark:bg-gray-800' },
-                        React.createElement(flowbite_react_1.Table.Cell, null, new Date(post.updatedAt).toLocaleDateString()),
-                        React.createElement(flowbite_react_1.Table.Cell, null,
-                            React.createElement(react_router_dom_1.Link, { to: `/post/${post.slug}` },
-                                React.createElement("img", { src: post.image, alt: post.title, className: 'w-20 h-10 object-cover bg-gray-500' }))),
-                        React.createElement(flowbite_react_1.Table.Cell, null,
-                            React.createElement(react_router_dom_1.Link, { className: 'font-medium text-gray-900 dark:text-white', to: `/post/${post.slug}` }, post.title)),
-                        React.createElement(flowbite_react_1.Table.Cell, null, post.category),
-                        React.createElement(flowbite_react_1.Table.Cell, null,
-                            React.createElement("span", { onClick: () => {
-                                    setShowModal(true);
-                                    setPostIdToDelete(post._id);
-                                }, className: 'font-medium text-red-500 hover:underline cursor-pointer' }, "Delete")),
-                        React.createElement(flowbite_react_1.Table.Cell, null,
-                            React.createElement(react_router_dom_1.Link, { className: 'text-teal-500 hover:underline', to: `/update-post/${post._id}` },
-                                React.createElement("span", null, "Edit")))))))),
-            showMore && (React.createElement("button", { onClick: handleShowMore, className: 'w-full text-teal-500 self-center text-sm py-7' }, "Show more")))) : (React.createElement("p", null, "You have no posts yet!")),
-        React.createElement(flowbite_react_1.Modal, { show: showModal, onClose: () => setShowModal(false), popup: true, size: 'md' },
-            React.createElement(flowbite_react_1.Modal.Header, null),
-            React.createElement(flowbite_react_1.Modal.Body, null,
-                React.createElement("div", { className: 'text-center' },
-                    React.createElement(hi_1.HiOutlineExclamationCircle, { className: 'h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' }),
-                    React.createElement("h3", { className: 'mb-5 text-lg text-gray-500 dark:text-gray-400' }, "Are you sure you want to delete this post?"),
-                    React.createElement("div", { className: 'flex justify-center gap-4' },
-                        React.createElement(flowbite_react_1.Button, { color: 'failure', onClick: handleDeletePost }, "Yes, I'm sure"),
-                        React.createElement(flowbite_react_1.Button, { color: 'gray', onClick: () => setShowModal(false) }, "No, cancel")))))));
+    return (_jsxs("div", { className: 'table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500', children: [currentUser.isAdmin && userPosts.length > 0 ? (_jsxs(_Fragment, { children: [_jsxs(Table, { hoverable: true, className: 'shadow-md', children: [_jsxs(Table.Head, { children: [_jsx(Table.HeadCell, { children: "Date updated" }), _jsx(Table.HeadCell, { children: "Post image" }), _jsx(Table.HeadCell, { children: "Post title" }), _jsx(Table.HeadCell, { children: "Category" }), _jsx(Table.HeadCell, { children: "Delete" }), _jsx(Table.HeadCell, { children: _jsx("span", { children: "Edit" }) })] }), userPosts.map((post) => (_jsx(Table.Body, { className: 'divide-y', children: _jsxs(Table.Row, { className: 'bg-white dark:border-gray-700 dark:bg-gray-800', children: [_jsx(Table.Cell, { children: new Date(post.updatedAt).toLocaleDateString() }), _jsx(Table.Cell, { children: _jsx(Link, { to: `/post/${post.slug}`, children: _jsx("img", { src: post.image, alt: post.title, className: 'w-20 h-10 object-cover bg-gray-500' }) }) }), _jsx(Table.Cell, { children: _jsx(Link, { className: 'font-medium text-gray-900 dark:text-white', to: `/post/${post.slug}`, children: post.title }) }), _jsx(Table.Cell, { children: post.category }), _jsx(Table.Cell, { children: _jsx("span", { onClick: () => {
+                                                    setShowModal(true);
+                                                    setPostIdToDelete(post._id);
+                                                }, className: 'font-medium text-red-500 hover:underline cursor-pointer', children: "Delete" }) }), _jsx(Table.Cell, { children: _jsx(Link, { className: 'text-teal-500 hover:underline', to: `/update-post/${post._id}`, children: _jsx("span", { children: "Edit" }) }) })] }) })))] }), showMore && (_jsx("button", { onClick: handleShowMore, className: 'w-full text-teal-500 self-center text-sm py-7', children: "Show more" }))] })) : (_jsx("p", { children: "You have no posts yet!" })), _jsxs(Modal, { show: showModal, onClose: () => setShowModal(false), popup: true, size: 'md', children: [_jsx(Modal.Header, {}), _jsx(Modal.Body, { children: _jsxs("div", { className: 'text-center', children: [_jsx(HiOutlineExclamationCircle, { className: 'h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' }), _jsx("h3", { className: 'mb-5 text-lg text-gray-500 dark:text-gray-400', children: "Are you sure you want to delete this post?" }), _jsxs("div", { className: 'flex justify-center gap-4', children: [_jsx(Button, { color: 'failure', onClick: handleDeletePost, children: "Yes, I'm sure" }), _jsx(Button, { color: 'gray', onClick: () => setShowModal(false), children: "No, cancel" })] })] }) })] })] }));
 }
-exports.default = DashPosts;

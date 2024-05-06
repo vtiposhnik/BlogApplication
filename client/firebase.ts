@@ -6,7 +6,7 @@ import 'firebase/auth';
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBVNRs5Y6ZCQz16EqA4S4jGZ5qAIiSoT3E",
+    apiKey: import.meta.env.FIREBASE_API_KEY,
     authDomain: "blog-chebu.firebaseapp.com",
     projectId: "blog-chebu",
     storageBucket: "blog-chebu.appspot.com",

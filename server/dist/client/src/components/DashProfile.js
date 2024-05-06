@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,13 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const flowbite_react_1 = require("flowbite-react");
-const react_redux_1 = require("react-redux");
-const userSlice_1 = require("../redux/user/userSlice");
-function DashProfile() {
-    const { currentUser } = (0, react_redux_1.useSelector)((state) => state.user);
-    const dispatch = (0, react_redux_1.useDispatch)();
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Avatar, Button } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutSuccess } from "../redux/user/userSlice";
+export default function DashProfile() {
+    const { currentUser } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const handleLogout = () => __awaiter(this, void 0, void 0, function* () {
         try {
             const res = yield fetch('/api/user/signout', {
@@ -25,28 +25,12 @@ function DashProfile() {
                 data.message;
             }
             else {
-                dispatch((0, userSlice_1.logOutSuccess)());
+                dispatch(logOutSuccess());
             }
         }
         catch (error) {
             console.log(error);
         }
     });
-    return (React.createElement("section", { className: "flex flex-col gap-4 items-center p-6 text-center" },
-        React.createElement("h1", null, "Profile"),
-        React.createElement("div", null,
-            React.createElement(flowbite_react_1.Avatar, { size: 40, alt: "User settings", img: "https://flowbite.com/docs/images/people/profile-picture-5.jpg", rounded: true, bordered: true })),
-        React.createElement("div", { id: 'user-info', className: "" },
-            React.createElement("p", null,
-                React.createElement("i", null, "User: "),
-                currentUser.username),
-            React.createElement("p", null,
-                React.createElement("i", null, "Email: "),
-                currentUser.email),
-            React.createElement("p", null,
-                React.createElement("i", null, "LastSeen: "),
-                currentUser.updatedAt)),
-        React.createElement("div", { id: 'about', className: "w-[60%]" }, "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta, impedit nulla. Fugiat voluptatum quos soluta omnis nulla, maiores ullam non earum deleniti harum eligendi aliquam temporibus nisi voluptate eos doloremque."),
-        React.createElement(flowbite_react_1.Button, { onClick: handleLogout }, "Sign Out")));
+    return (_jsxs("section", { className: "flex flex-col gap-4 items-center p-6 text-center", children: [_jsx("h1", { children: "Profile" }), _jsx("div", { children: _jsx(Avatar, { size: 40, alt: "User settings", img: "https://flowbite.com/docs/images/people/profile-picture-5.jpg", rounded: true, bordered: true }) }), _jsxs("div", { id: 'user-info', className: "", children: [_jsxs("p", { children: [_jsx("i", { children: "User: " }), currentUser.username] }), _jsxs("p", { children: [_jsx("i", { children: "Email: " }), currentUser.email] }), _jsxs("p", { children: [_jsx("i", { children: "LastSeen: " }), currentUser.updatedAt] })] }), _jsx("div", { id: 'about', className: "w-[60%]", children: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta, impedit nulla. Fugiat voluptatum quos soluta omnis nulla, maiores ullam non earum deleniti harum eligendi aliquam temporibus nisi voluptate eos doloremque." }), _jsx(Button, { onClick: handleLogout, children: "Sign Out" })] }));
 }
-exports.default = DashProfile;

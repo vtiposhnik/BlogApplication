@@ -1,9 +1,11 @@
-import { Avatar, Button, TextInput } from "flowbite-react"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Avatar, Button } from "flowbite-react"
 import { useDispatch, useSelector } from "react-redux"
 import { logOutSuccess } from "../redux/user/userSlice"
 
 export default function DashProfile() {
-    const { currentUser } = useSelector((state) => state.user)
+    const { currentUser } = useSelector((state: any) => state.user)
     const dispatch = useDispatch()
 
     const handleLogout = async () => {

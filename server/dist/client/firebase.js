@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.storage = void 0;
 // Import Firebase SDK
-const app_1 = require("firebase/app");
-const storage_1 = require("firebase/storage");
-require("firebase/auth");
+import { initializeApp } from 'firebase/app';
+import { getStorage } from 'firebase/storage';
+import 'firebase/auth';
 // import serviceAccount from './blog-chebu-firebase-adminsdk-gih1v-bd4d97696f.json'
 // Initialize Firebase
 const firebaseConfig = {
@@ -15,6 +12,6 @@ const firebaseConfig = {
     messagingSenderId: "889702850641",
     appId: "1:889702850641:web:adf5ff7a82177a513b9870"
 };
-const app = (0, app_1.initializeApp)(firebaseConfig);
-exports.storage = (0, storage_1.getStorage)(app);
-exports.default = app;
+const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
+export default app;

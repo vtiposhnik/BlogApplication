@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
@@ -18,7 +20,7 @@ export default function SignIn() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async (formData) => {
+    const onSubmit = async (formData: any) => {
         console.log(formData);
 
         try {
@@ -77,7 +79,7 @@ export default function SignIn() {
                                 })}
                             />
                         </div>
-                        {errors.email && (<span className="error"> {errors.email.message} </span>)}
+                        {errors.email && (<span className="error"> {errors.email.message?.toString()} </span>)}
 
                         <div>
                             <Label value='Ваш пароль' />

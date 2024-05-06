@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Sidebar } from "flowbite-react/components/Sidebar";
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from "react-icons/hi";
+import { HiArrowSmRight, HiChartPie, HiInbox, HiUser} from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import {useSelector} from 'react-redux'
 
 export default function DashSidebar() {
     const location = useLocation();
     const [tab, setTab] = useState('');
-    const {currentUser} = useSelector(state => state.user)
+    const {currentUser} = useSelector((state: any) => state.user)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);

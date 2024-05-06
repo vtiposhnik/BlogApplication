@@ -1,14 +1,10 @@
-"use strict";
-var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.logOutSuccess = exports.signInFailure = exports.signInSuccess = exports.signInStart = void 0;
-const toolkit_1 = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     currentUser: null,
     error: null,
     loading: false
 };
-const userSlice = (0, toolkit_1.createSlice)({
+const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -32,5 +28,5 @@ const userSlice = (0, toolkit_1.createSlice)({
         }
     }
 });
-_a = userSlice.actions, exports.signInStart = _a.signInStart, exports.signInSuccess = _a.signInSuccess, exports.signInFailure = _a.signInFailure, exports.logOutSuccess = _a.logOutSuccess;
-exports.default = userSlice.reducer;
+export const { signInStart, signInSuccess, signInFailure, logOutSuccess } = userSlice.actions;
+export default userSlice.reducer;

@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { useState } from "react";
 
 export default function SignUp() {
-    const [errorMsg, setErrorMsg] = useState(null)
+    const [errorMsg, setErrorMsg] = useState<any>(null)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
 
@@ -18,7 +20,7 @@ export default function SignUp() {
 
 
 
-    const onSubmit = async (formData) => {
+    const onSubmit = async (formData: any) => {
         console.log(formData);
 
         try {
@@ -40,7 +42,7 @@ export default function SignUp() {
                 console.log("successfull", data.message)
                 navigate('/signin');
             }
-        } catch (error) {
+        } catch (error: any) {
             console.log("in Catch", errorMsg)
             setErrorMsg(error.message);
             setLoading(false);
@@ -94,7 +96,7 @@ export default function SignUp() {
                                 })}
                             />
                         </div>
-                        {errors.email && (<span className="error"> {errors.email.message} </span>)}
+                        {errors.email && (<span className="error"> {errors.email.message?.toString()} </span>)}
 
                         <div>
                             <Label value='Your password' />
@@ -136,7 +138,7 @@ export default function SignUp() {
                                 })}
                             />
                         </div>
-                        {errors.passwordConfirm && <span className="error"> {errors.passwordConfirm.message} </span>}
+                        {errors.passwordConfirm && <span className="error"> {errors.passwordConfirm.message?.toString()} </span>}
 
                         <Button
                             gradientDuoTone='purpleToPink'
@@ -161,7 +163,7 @@ export default function SignUp() {
                     </div>
                     {errorMsg && (
                         <Alert className='mt-5' color='failure'>
-                            {errorMsg}
+                            {errorMsg.toString()}
                         </Alert>
                     )}
                 </div>

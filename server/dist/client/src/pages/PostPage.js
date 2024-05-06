@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,21 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const flowbite_react_1 = require("flowbite-react");
-const react_1 = require("react");
-const react_router_dom_1 = require("react-router-dom");
-const CommentsSection_1 = __importDefault(require("../components/CommentsSection"));
-function PostPage() {
-    const { postSlug } = (0, react_router_dom_1.useParams)();
-    const [loading, setLoading] = (0, react_1.useState)(true);
-    const [error, setError] = (0, react_1.useState)(false);
-    const [post, setPost] = (0, react_1.useState)();
-    const [recentPosts, setRecentPosts] = (0, react_1.useState)(null);
-    (0, react_1.useEffect)(() => {
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button, Spinner } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import CommentsSection from '../components/CommentsSection';
+export default function PostPage() {
+    const { postSlug } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [post, setPost] = useState();
+    useEffect(() => {
+        console.log(error);
         const fetchPost = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 setLoading(true);
@@ -47,36 +44,10 @@ function PostPage() {
         });
         fetchPost();
     }, [postSlug]);
-    (0, react_1.useEffect)(() => {
-        try {
-            const fetchRecentPosts = () => __awaiter(this, void 0, void 0, function* () {
-                const res = yield fetch(`/api/post/getposts?limit=3`);
-                const data = yield res.json();
-                if (res.ok) {
-                    setRecentPosts(data.posts);
-                }
-            });
-            fetchRecentPosts();
-        }
-        catch (error) {
-            console.log(error.message);
-        }
-    }, []);
     if (loading)
-        return (React.createElement("div", { className: 'flex justify-center items-center min-h-screen' },
-            React.createElement(flowbite_react_1.Spinner, { size: 'xl' })));
-    return (React.createElement("main", { className: 'p-3 flex flex-col max-w-6xl mx-auto min-h-screen' },
-        React.createElement("h1", { className: 'text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl' }, post && post.title),
-        React.createElement(react_router_dom_1.Link, { to: '', className: 'self-center mt-5' },
-            React.createElement(flowbite_react_1.Button, { color: 'gray', pill: true, size: 'xs' }, post && post.category)),
-        React.createElement("img", { src: post && post.image, alt: post && post.title, className: 'mt-10 p-3 max-h-[600px] w-full object-cover' }),
-        React.createElement("div", { className: 'flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs' },
-            React.createElement("span", null, post && new Date(post.createdAt).toLocaleDateString()),
-            React.createElement("span", { className: 'italic' },
-                post && (post.content.length / 1000).toFixed(0),
-                " mins read")),
-        React.createElement("div", { className: 'p-3 max-w-2xl mx-auto w-full post-content', dangerouslySetInnerHTML: { __html: post && post.content } }),
-        React.createElement("div", null,
-            React.createElement(CommentsSection_1.default, { postId: post._id }))));
+        return (_jsx("div", { className: 'flex justify-center items-center min-h-screen', children: _jsx(Spinner, { size: 'xl' }) }));
+    if (!post) {
+        throw Error('post is null');
+    }
+    return (_jsxs("main", { className: 'p-3 flex flex-col max-w-6xl mx-auto min-h-screen', children: [_jsx("h1", { className: 'text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl', children: post && post.title }), _jsx(Link, { to: '', className: 'self-center mt-5', children: _jsx(Button, { color: 'gray', pill: true, size: 'xs', children: post && post.category }) }), _jsx("img", { src: post && post.image, className: 'mt-10 p-3 max-h-[600px] w-full object-cover' }), _jsxs("div", { className: 'flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs', children: [_jsx("span", { children: post && new Date(post.createdAt).toLocaleDateString() }), _jsxs("span", { className: 'italic', children: [post && (post.content.length / 1000).toFixed(0), " mins read"] })] }), _jsx("div", { className: 'p-3 max-w-2xl mx-auto w-full post-content', dangerouslySetInnerHTML: { __html: post && post.content } }), _jsx("div", { children: _jsx(CommentsSection, { postId: post._id }) })] }));
 }
-exports.default = PostPage;

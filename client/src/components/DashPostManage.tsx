@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal, Table, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { RootState } from '../redux/store';
 
 export default function DashPosts() {
-    const { currentUser } = useSelector((state) => state.user);
-    const [userPosts, setUserPosts] = useState([]);
+    const { currentUser } = useSelector((state: any) => state.user);
+    const [userPosts, setUserPosts] = useState<any>([]);
     const [showMore, setShowMore] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [postIdToDelete, setPostIdToDelete] = useState('');
@@ -27,7 +27,7 @@ export default function DashPosts() {
                     }
                 }
             } catch (error) {
-                console.log(error.message);
+                console.log(error);
             }
         };
         if (currentUser.isAdmin) {
@@ -43,13 +43,13 @@ export default function DashPosts() {
             );
             const data = await res.json();
             if (res.ok) {
-                setUserPosts((prev) => [...prev, ...data.posts]);
+                setUserPosts((prev: any) => [...prev, ...data.posts]);
                 if (data.posts.length < 9) {
                     setShowMore(false);
                 }
             }
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 
@@ -66,12 +66,12 @@ export default function DashPosts() {
             if (!res.ok) {
                 console.log(data.message);
             } else {
-                setUserPosts((prev) =>
-                    prev.filter((post) => post._id !== postIdToDelete)
+                setUserPosts((prev: any) =>
+                    prev.filter((post: any) => post._id !== postIdToDelete)
                 );
             }
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 
@@ -90,7 +90,7 @@ export default function DashPosts() {
                                 <span>Edit</span>
                             </Table.HeadCell>
                         </Table.Head>
-                        {userPosts.map((post) => (
+                        {userPosts.map((post: any) => (
                             <Table.Body className='divide-y'>
                                 <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                                     <Table.Cell>

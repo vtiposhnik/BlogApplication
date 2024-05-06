@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { HiChat, HiEye } from 'react-icons/hi'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Button, FileInput, Alert, Modal, Select, Spinner, TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
@@ -42,8 +41,6 @@ export default function Posts() {
         titleVal: '',
         contentVal: ''
     })
-    const [publishError, setPublishError] = useState('');
-
     const navigate = useNavigate();
 
     const [posts, setPosts] = useState<PostData[]>([])
@@ -117,7 +114,6 @@ export default function Posts() {
             navigate(`posts/${slug}`)
 
         } catch (error) {
-            setPublishError("Something went wrong!")
             console.error(error)
         }
     }

@@ -1,9 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_redux_1 = require("react-redux");
-const react_router_dom_1 = require("react-router-dom");
-function PrivateComponent() {
-    const { currentUser } = (0, react_redux_1.useSelector)(state => state.user);
-    return currentUser ? React.createElement(react_router_dom_1.Outlet, null) : React.createElement(react_router_dom_1.Navigate, { to: '/sign-in' });
+import { jsx as _jsx } from "react/jsx-runtime";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from 'react-router-dom';
+export default function PrivateComponent() {
+    const { currentUser } = useSelector((state) => state.user);
+    return currentUser ? _jsx(Outlet, {}) : _jsx(Navigate, { to: '/sign-in' });
 }
-exports.default = PrivateComponent;
