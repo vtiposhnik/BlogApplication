@@ -9,7 +9,7 @@ import authRoutes from './routes/auth.route'
 import postRoutes from './routes/post.route'
 import commentRoutes from './routes/comment.route'
 
-import path from 'path';
+import path, { dirname } from 'path';
 
 // middleware
 const app = express()
@@ -42,6 +42,7 @@ app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
+console.log(dirname, "other one", __dirname)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
