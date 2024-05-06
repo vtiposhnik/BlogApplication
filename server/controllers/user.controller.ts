@@ -7,7 +7,6 @@ export const getApi = (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.body
-    console.log(req.body.user)
 
     const user = await User.findById('66377e4a55f7b37c918cbd4a')
 

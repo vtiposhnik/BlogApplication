@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/user.route.ts'
 import authRoutes from './routes/auth.route.ts'
 import postRoutes from './routes/post.route.ts'
+import commentRoutes from './routes/comment.route.ts'
 import { errorHandler } from './utils/error.ts';
 import { CustomError } from './interfaces.ts';
 
@@ -38,6 +39,7 @@ if (process.env.MONGO_URL) {
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
+app.use('/api/comment', commentRoutes)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
