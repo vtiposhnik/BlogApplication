@@ -11,6 +11,9 @@ import commentRoutes from './routes/comment.route.ts'
 import { errorHandler } from './utils/error.ts';
 import { CustomError } from './interfaces.ts';
 
+import path from 'path';
+const __dirname = path.resolve();
+
 // middleware
 const app = express()
 
@@ -40,6 +43,13 @@ app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
