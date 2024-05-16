@@ -14,10 +14,7 @@ export default function Header() {
                 to='/'
                 className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
             >
-                <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-                    Chebu
-                </span>
-                Pizza
+                <img src="/icon.png" className="size-[35px]" alt="" />
             </Link>
 
             <div className='flex gap-2 md:order-2'>
@@ -31,13 +28,13 @@ export default function Header() {
                             }
                         >
                             <Dropdown.Header>
-                                <span className="block text-sm">Chebu Pizza</span>
+                                <span className="block text-sm">{}</span>
                                 <span className="block truncate text-sm font-medium"></span>
                             </Dropdown.Header>
-                            <Dropdown.Item><Link to='/dashboard'>Управление</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to='/dashboard?tab=profile'>Профиль</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard'>Dashboard</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to='/dashboard?tab=profile'>Profile</Link></Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item>Выйти</Dropdown.Item>
+                            <Dropdown.Item>Sign Out</Dropdown.Item>
                         </Dropdown>
                     </div>
                 ) : (
@@ -52,13 +49,13 @@ export default function Header() {
 
             <Navbar.Collapse>
                 <Navbar.Link active={path === '/'} as={'div'}>
-                    <Link to='/'>Главная</Link>
+                    <Link to='/'>Home</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/about'} as={'div'}>
-                    <Link to='/about'>О нас</Link>
+                    <Link to='/about'>About</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/posts'} as={'div'}>
-                    <Link to='/posts'>Сообщество</Link>
+                    <Link to='/posts'>Community</Link>
                 </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>

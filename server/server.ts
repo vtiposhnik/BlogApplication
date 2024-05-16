@@ -9,8 +9,6 @@ import authRoutes from './routes/auth.route'
 import postRoutes from './routes/post.route'
 import commentRoutes from './routes/comment.route'
 
-import path, { dirname } from 'path';
-
 // middleware
 const app = express()
 
@@ -41,15 +39,14 @@ app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 
-const parentDir = path.resolve(__dirname, '..')
+// const parentDir = path.resolve(__dirname, '..')
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// app.use(express.static(path.join(__dirname, '/client/dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(parentDir, 'client', 'dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(parentDir, 'client', 'dist', 'index.html'));
+// });
 
-console.log(parentDir, "Parent Directory")
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
@@ -62,7 +59,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-const port = 10000
+const port = 3333
 app.listen(port, () => {
     console.log(`running on http://localhost:${port}`)
 })

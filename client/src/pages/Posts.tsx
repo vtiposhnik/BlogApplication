@@ -7,9 +7,9 @@ import 'react-quill/dist/quill.snow.css';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { storage } from '../../firebase'
 import 'react-loading-skeleton/dist/skeleton.css'
-import {PostData, FormData} from '../util/interfaces'
+import { PostData, FormData } from '../util/interfaces'
 
-const TruncateText = ({ text, maxLength }: {text: string | null, maxLength: number}) => {
+const TruncateText = ({ text, maxLength }: { text: string | null, maxLength: number }) => {
     if (!text) {
         return 'no text specified'
     }
@@ -70,7 +70,6 @@ export default function Posts() {
         if (!res.ok) {
             console.error("Could not get the username")
         }
-
         const data = await res.json()
         setUsername(data.username)
     }
@@ -94,7 +93,6 @@ export default function Posts() {
                 handleSubmit()
                 setIsOpen(false)
             }
-
     }
 
     const handleSubmit = async () => {
@@ -180,7 +178,7 @@ export default function Posts() {
                 </div>
             </aside>
 
-             <article className="w-[60%]">
+            <article className="w-[60%]">
                 {posts.map((post) => {
                     return (
 
